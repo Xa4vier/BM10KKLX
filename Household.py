@@ -1,4 +1,4 @@
-class Household():
+class Household:
     """ Household bass class """
     
     def __init__(self, name, energyNeed):
