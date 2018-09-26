@@ -3,40 +3,32 @@ from Energy import EnergyNeed
 from Heatpump import HeatPump
 from Simulation import Simulation
 
-def add_heatpumps(amount, name, maxOutput):
-    heatpumps = []
-    for i in range(amount):
-        heatpumps.append(HeatPump(name, maxOutput))
-    return heatpumps
-
-def add_households(amount, name, energy, startTime, stopTime):
-    households = []
-    for i in range(amount):
-        households.append(Household(name, EnergyNeed(energy, startTime, stopTime)))
-    return households
-
-def make_list_one_dim(list_):
-    returnList = []
-    for i in list_:
-        for j in i:
-            returnList.append(j)
-    return returnList
-
 # adding heat pumps
-heatPumps = [] 
-heatPumps.append(add_heatpumps(2, 'standaart', 300))
-heatPumps.append(add_heatpumps(4, 'extra Turbo', 500))
-
-heatPumps = make_list_one_dim(heatPumps)
-
+heatPumps = []
+# heat pump standaart
+heatPumps.append(HeatPump(2, 'standaart', 300))
+# heat pump turbo
+heatPumps.append(HeatPump(4, 'extra Turbo', 500))
+  
 # adding households
 households = []
-households.append(add_households(100, 'gezin met kinderen', 30, 1200, 1200))
-households.append(add_households(50, 'een persoon', 13, 1200, 1200))
+# gezin met kinderen huishouden
+households.append(Household(100, 'gezin met kinderen'))
+households[len(households) - 1].energyNeed.append(EnergyNeed(30, 7, 9))
+households[len(households) - 1].energyNeed.append(EnergyNeed(25, 16, 21))
+households[len(households) - 1].energyNeed.append(EnergyNeed(15, 21, 23))
 
-households = make_list_one_dim(households)
+# eens gezins huishouden
+households.append(Household(100, 'eens gezins'))
+households[len(households) - 1].energyNeed.append(EnergyNeed(13, 8, 9))
+households[len(households) - 1].energyNeed.append(EnergyNeed(10, 17, 24))
 
 # set simulation
 Simulation = Simulation(households, heatPumps)
 
-print(Simulation.run())
+data = Simulation.run()
+
+i = 1
+for d in data:
+    print(f"{i} overload: {d.get('overload')}, need: {d.get('need')}, max: {d.get('max_output')}")
+    i += 1

@@ -6,30 +6,30 @@ class Simulation:
         self.heatPumps = heatPumps
       
     def run(self):
-        need = self.total_need()
-        maxOutput = self.max_output()
-        if need > maxOutput:
-            message =   f""" heat pump crash!
-            need: {need}
-            max cap: {maxOutput}
-                            """
-        if need <= maxOutput:
-            message = f"""all oke!
-            need: {need}
-            max cap: {maxOutput}"""
-        return message
+        max_output = self.max_output()
+        data = []
+        for hour in range(1, 25): 
+            need = self.total_need_per_hour(hour)
+            overload = True
+            if need > max_output: 
+                overload = False
+                
+            data.append({'overload' : overload, 'need' : need, 'max_output' : max_output,})
+        return data
         
     
-    def total_need(self):
+    def total_need_per_hour(self, hour):
         need = 0
         for household in self.households:
-            need += household.energyNeed.energy
+            for energyNeed in household.energyNeed:
+                if energyNeed.startTime <= hour and energyNeed.stopTime > hour:
+                    need += energyNeed.energy * household.amount
         return need
 
     def max_output(self):
         production = 0
         for heatpump in self.heatPumps:
-            production += heatpump.maxOutput
+            production += heatpump.maxOutput * heatpump.amount
         return production
     
     def total_production(self):
