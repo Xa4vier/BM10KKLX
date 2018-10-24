@@ -1,8 +1,7 @@
-class HeatPump:
+class Heatpump:
     """ Headpump bass class """
     
-    def __init__(self, amount, name, maxOutput):
-        self.amount = amount
+    def __init__(self, name, maxOutput):
         self.name = name
         self.maxOutput = maxOutput
-        self.energyOutput = 0
+        self.heatOutput = 0

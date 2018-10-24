@@ -1,9 +1,8 @@
 class Simulation:
     """ the environment where the magic happens """
     
-    def __init__(self, households, heatPumps):
+    def __init__(self, households):
         self.households = households
-        self.heatPumps = heatPumps
       
     def run(self):
         max_output = self.max_output()
