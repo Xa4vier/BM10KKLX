@@ -28,7 +28,6 @@ def get_dataset_list(name):
     
     temprow.append(temp)
     tempset.append(temprow)
-    del tempset[len(tempset) - 1]
     return tempset
 
 def get_X(begin, end, dataset):
