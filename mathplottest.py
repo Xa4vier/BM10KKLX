@@ -12,8 +12,7 @@ def plot(x, y, xas, yas, hlines = False):
     plt.xticks(xas)
     plt.yticks(yas)
     plt.show()
- 
-    
+     
 def calculate_above_area(dataset, maxi):
     yAbove = []
     for i in range(len(dataset)):
@@ -86,6 +85,7 @@ for name in names:
     topCreamingRate = .025 # this is the rate where the peaks will be cut off
     curveRate = .1 # dit is het percentage waarmee het eerst volgende datapunt word verminderd
     maxY = 2500 # this is the max where the graph has to be under
+    
     for peak in peaks: # loop trough al peaks
         
         indexes = [peak.index(i) for i in peak if i != 0] # get all the indexes of the peak
@@ -106,8 +106,7 @@ for name in names:
                 dataset[previousIndex][1] += diffrence
                 sumPeak -= diffrence
             previousIndex -= 1
-        i = 1
     
-    plot(get_X(0, 1, dataset), get_Y(1, dataset), range(0, 25, 2), range(0, 6001, 500), 2500) # plot datapoints
+    plot(get_X(0, 1, dataset), get_Y(1, dataset), range(0, 25, 2), range(0, 3001, 500), 2500) # plot datapoints
     y = [i[1] for i in dataset] # get all the Y 
     print(f'total area: {simps(y, dx=1)}')
